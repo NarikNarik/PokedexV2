@@ -1,58 +1,32 @@
-import React, { Component } from 'react'
-//import { observer } from 'mobx-react'
+import React, { useState } from 'react'
 import Profile from './Profile'
-import './PokeCard.css'
-//import PokemonStore from './PokemonStore'
+import './PokeCard.styl'
 
+export default function PokeCard (props) {
+  let [profileIsOpen, setProfileIsOpen] = useState(false)
 
-class PokeCard extends Component {
+  const toggleProfile = () => {
+    setProfileIsOpen(!profileIsOpen)
+  }
 
-  constructor (props) {
-    super(props)
-      this.state = {
-      profileIsOpen: false
-      }
-    }
-
-    openProfile = () => {
-      this.setState({
-    profileIsOpen: true
-      })
-    }
-    closeProfile = () => {
-      this.setState({
-    profileIsOpen: false
-      })
-    }
-
-
-    render() {
-      //const { openProfile, closeProfile } = this.props.store
-      return(
-        <div className='AllCards'>
-        <div className='AllCards-pokemonName'>
-        { this.props.name }
-          </div>
-          ***
-          <div className='id'>
-          ID:{this.props.id}
-          </div>
-          <div>
-            <img className='AllCards-image'
-                src={ this.props.sprites.front_default }
-                alt={ this.props.name }/>
-          </div>
-          <button className='AllCards-button' onClick={this.openProfile}>Info...</button>
-            {
-            this.state.profileIsOpen
-            ? <Profile {...this.props} closeProfile={this.closeProfile}/>
-            : null
-          }
-        </div>
-
-      )
-
-    }
-
+  return (
+    <div className='AllCards'>
+      <div className='AllCards-pokemonName'>{props.name}</div>
+      ***
+      <div className='id'>ID:{props.id}</div>
+      <div>
+        <img
+          className='AllCards-image'
+          src={props.sprites.front_default}
+          alt={props.name}
+        />
+      </div>
+      <button className='AllCards-button' onClick={toggleProfile}>
+        Info...
+      </button>
+      {profileIsOpen ? (
+        <Profile {...props} toggleProfile={toggleProfile} />
+      ) : null}
+    </div>
+  )
 }
-export default PokeCard

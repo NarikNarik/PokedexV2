@@ -1,64 +1,57 @@
-import React, { Component } from 'react'
-import { observer } from 'mobx-react'
-import './Profile.css'
-
-@observer
-class Profile extends Component {
-
-    render() {
-      return(
-        <div>
-        {
-          this.props.name && (
-            <div className='Profile'>
-            <h1 className='Profile-header'>
-            {this.props.name[0].toUpperCase() + this.props.name.slice(1)}
-            </h1>
-            <div className='Profile-content'>
-              <div className='Image-block'>
-                <img className='Profile-image'
-                    src={ this.props.sprites.front_default }
-                    alt={ this.props.name }/>
-              </div>
-              <div className='Profile-info'>
+import React from 'react'
+import './Profile.styl'
+export default function Profile (props) {
+  return (
+    <div>
+      {props.name && (
+        <div className='Profile'>
+          <h1 className='Profile-header'>
+            {props.name[0].toUpperCase() + props.name.slice(1)}
+          </h1>
+          <div className='Profile-content'>
+            <div className='Image-block'>
+              <img
+                className='Profile-image'
+                src={props.sprites.front_default}
+                alt={props.name}
+              />
+            </div>
+            <div className='Profile-info'>
               <table className='table'>
-            <thead>
-              <tr>
-                <th>Stat</th>
-                <th>Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.props.stats.map((item, id) => {
-                if (!item) {
-                  return (
-                    <tr>
-                      <td>Error...</td>
-                    </tr>
-                  )
-                }
-                return (
-                  <tr key={id}>
-                    <td>{item.stat.name}</td>
-                    <td>
-                      <progress value={item.base_stat} max='170' />
-                      <span>
-                        {item.base_stat}
-                      </span>
-                    </td>
+                <thead>
+                  <tr>
+                    <th>Stat</th>
+                    <th>Value</th>
                   </tr>
-                )
-              })}
-            </tbody>
-          </table>
+                </thead>
+                <tbody>
+                  {props.stats.map((item, id) => {
+                    if (!item) {
+                      return (
+                        <tr>
+                          <td>Error...</td>
+                        </tr>
+                      )
+                    }
+                    return (
+                      <tr key={id}>
+                        <td>{item.stat.name}</td>
+                        <td>
+                          <progress value={item.base_stat} max='170' />
+                          <span>{item.base_stat}</span>
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
             </div>
-            </div>
-            <button className='Profile-CloseButton' onClick={this.props.closeProfile}>X</button>
-            </div>
-          )
-        }
+          </div>
+          <button className='Profile-CloseButton' onClick={props.toggleProfile}>
+            X
+          </button>
         </div>
-      )
-    }
+      )}
+    </div>
+  )
 }
-export default Profile
